@@ -8,24 +8,55 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="WSkillsApp - Просмотр клиентов">
 
-    <Grid>
+	<Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="25px"/>
-			<RowDefinition/>
+			<RowDefinition Height="*"/>
+			<RowDefinition Height="25px"/>
 		</Grid.RowDefinitions>
-		<DataGrid x:Name="ClientsDG" Grid.Row="1" ItemsSource="{Binding Path=ClientVMs}" AutoGenerateColumns="False" Width="800">
+		<StackPanel Orientation="Horizontal">
+			<Button Content="Фильтрация" Style="{StaticResource OrangeButton}" Template="{DynamicResource OrangeButtonTemplate}" Click="FiltrationButton_Click"
+					x:Name="FiltrationButton"/>
+			<Button Style="{StaticResource OrangeButton}" Template="{DynamicResource OrangeButtonTemplate}"
+					Content="Фамилия" Click="SortByLastname_Click" Margin="20 0 0 0"/>
+			<Button Style="{StaticResource OrangeButton}" Template="{DynamicResource OrangeButtonTemplate}"
+					Content="Дата последнего посещения" Click="SortByLastVisitDate_Click"/>
+			<Button Style="{StaticResource OrangeButton}" Template="{DynamicResource OrangeButtonTemplate}"
+					Content="Количество посещений" Click="SortByVisitsCount_Click"/>
+			<Button Style="{StaticResource OrangeButton}" Template="{DynamicResource OrangeButtonTemplate}"
+					Content="ДР в этом месяце" Margin="20 0 0 0" Click="BirthdaySoon_Click"/>
+		</StackPanel>
+		<DataGrid x:Name="ClientsDG" Grid.Row="1" ItemsSource="{Binding Path=ClientVMs}" AutoGenerateColumns="False">
 			<DataGrid.Columns>
-				<DataGridTextColumn Header="Фамилия" Binding="{Binding Path=LastName}"/>
-				<DataGridTextColumn Header="Имя" Binding="{Binding Path=FirstName}"/>
-				<DataGridTextColumn Header="Отчество" Binding="{Binding Path=Patronymic}"/>
-				<DataGridTextColumn Header="Пол" Binding="{Binding Path=Gender}"/>
-				<DataGridTextColumn Header="Дата рождения" Binding="{Binding Path=BirthDate, StringFormat=dd.MM.yyyy}"/>
-				<DataGridTextColumn Header="Телефон" Binding="{Binding Path=PhoneNumber}"/>
-				<DataGridTextColumn Header="Email" Binding="{Binding Path=Email}"/>
-				<DataGridTextColumn Header="Дата добавления" Binding="{Binding Path=AdditionDate, StringFormat=dd.MM.yyyy}"/>
-				<DataGridTextColumn Header="Дата последнего посещения" Binding="{Binding Path=LastVisitDate, StringFormat=dd.MM.yyyy}"/>
-				<DataGridTextColumn Header="Количество посещений" Binding="{Binding Path=VisitsCount}"/>
+				<DataGridTextColumn Header="Фамилия" Binding="{Binding Path=LastName}" Width="100"/>
+				<DataGridTextColumn Header="Имя" Binding="{Binding Path=FirstName}" Width="100"/>
+				<DataGridTextColumn Header="Отчество" Binding="{Binding Path=Patronymic}" Width="100"/>
+				<DataGridTextColumn Header="Пол" Binding="{Binding Path=Gender}" Width="35"/>
+				<DataGridTextColumn Header="Дата рождения" Binding="{Binding Path=BirthDate, StringFormat=dd.MM.yyyy}" Width="110"/>
+				<DataGridTextColumn Header="Телефон" Binding="{Binding Path=PhoneNumber}" Width="100"/>
+				<DataGridTextColumn Header="Email" Binding="{Binding Path=Email}" Width="130"/>
+				<DataGridTextColumn Header="Дата добавления" Binding="{Binding Path=AdditionDate, StringFormat=dd.MM.yyyy}" Width="120"/>
+				<DataGridTextColumn Header="Дата последнего посещения" Binding="{Binding Path=LastVisitDate, StringFormat=dd.MM.yyyy}" Width="170"/>
+				<DataGridTextColumn Header="Количество посещений" Binding="{Binding Path=VisitsCount}" Width="150"/>
+				<DataGridTextColumn Header="Теги" Binding="{Binding Path=TagsString}" Width="150"/>
 			</DataGrid.Columns>
 		</DataGrid>
+		<StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
+			<!--<StackPanel.Resources>
+				<Style TargetType="Label">
+					<Setter Property="FontFamily" Value="JetBrains Mono"/>
+				</Style>
+			</StackPanel.Resources>-->
+			<Button Content="&lt;" Height="20" Click="PrevPage_Click" Style="{StaticResource OrangeButton}" Template="{StaticResource OrangeButtonTemplate}"/>
+			<Label Name="PageNumberLabel" Content="{Binding Path=ClientsPageNumber}"/>
+			<Button Content="&gt;" Height="20" Click="NextPage_Click" Margin="0 0 10 0" Style="{StaticResource OrangeButton}" Template="{StaticResource OrangeButtonTemplate}"/>
+			<!--<Label Content="Отображать: "/>-->
+			<Label Name="Show10Label" Content="10" MouseLeftButtonDown="ShowLabel_MouseLeftButtonDown"/>
+			<Label Name="Show50Label" Content="50" MouseLeftButtonDown="ShowLabel_MouseLeftButtonDown" FontWeight="Black"/>
+			<Label Name="Show200Label" Content="200" MouseLeftButtonDown="ShowLabel_MouseLeftButtonDown"/>
+			<Label Name="ShowAllLabel" Content="ВСЕ" MouseLeftButtonDown="ShowLabel_MouseLeftButtonDown"/>
+			<Label Content="|"/>
+			<Label Name="ClientsCountLabel" Content="50/234" ToolTip="Количество отображаемых элементов / количество всех элементов"/>
+		</StackPanel>
 	</Grid>
 </Page>
